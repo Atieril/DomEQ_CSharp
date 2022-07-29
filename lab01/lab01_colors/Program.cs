@@ -6,4 +6,3 @@ foreach(ConsoleColor color in Enum.GetValues(typeof(ConsoleColor))) {
     Console.ResetColor();
     Console.WriteLine();
 }
-
