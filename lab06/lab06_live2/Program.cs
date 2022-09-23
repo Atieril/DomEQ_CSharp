@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 var lat = "50.035897";
 var lon = "19.942945";
-var apiKey = "df54e89ed5722f8af6dcb47aae9f6033";
+var apiKey = "<PLACE YOUR TOKEN HERE>";
 
 var url = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}&units=metric";
 

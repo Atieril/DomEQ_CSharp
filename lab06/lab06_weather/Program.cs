@@ -5,7 +5,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var apiKey = "df54e89ed5722f8af6dcb47aae9f6033";
+        var apiKey = "<PLACE YOUR TOKEN HERE>";
         var lat = "50.035879";
         var lon = "19.942980";
 
