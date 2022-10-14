@@ -1,0 +1,19 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Witaj świecie</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+<form>
+    <input type="text" name="toEncrypt" />
+    <input type="submit" />
+</form>
+
+<h1>Zaszyfrowane: @Model.EncryptedText</h1>
+<h1>Rozszyfrowane: @Model.DecryptedText</h1>
