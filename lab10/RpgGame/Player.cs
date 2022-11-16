@@ -1,6 +1,12 @@
 namespace RpgGame
 {
-    public class Player{
+    public class Player : GameCharacter{
+
+        public Player()
+        {
+            Position = new Coordinates(3,3);
+        }
+
         public int HitPoints {get; private set;} = 100;
         public int MaxHitPoints {get;set;} = 100;
 
@@ -31,6 +37,11 @@ namespace RpgGame
         public void ActivateDefense()
         {
             IsInDefense = true;
+        }
+
+        public override string GetSign()
+        {
+            return "@";
         }
     }
 }
