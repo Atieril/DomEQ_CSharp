@@ -2,33 +2,35 @@ namespace RpgGame
 {
     public class Player : GameCharacter{
 
-        public Player()
+        public Player(Game game) : base(game)
         {
             Position = new Coordinates(3,3);
+            MaxHitPoints = 100;
+            HitPoints = MaxHitPoints;
         }
 
-        public int MaxHitPoints {get;set;} = 100;
+        public int KillCount {get; private set;} = 0;
 
         public bool IsInDefense {get; private set;}
+        
 
-        public void Attack(Monster monster){
+        public override void Attack(GameCharacter opponent){
             var damage = Game.Random.Next(3,10);
-            monster.HitPoints -= damage;
-            Game.Messages.Enqueue($"You deal {damage} damage");
+            opponent.TakeDamage(damage);
         }
 
-        public void TakeDamage(int damage){
+        public override void TakeDamage(int damage){
 
             if(IsInDefense){
                HitPoints -= damage/2;   
-               Game.Messages.Enqueue($"You've taken {damage/2} damage");
+               Game.AddMessage($"You've taken {damage/2} damage");
                IsInDefense=false;
                var heal = Game.Random.Next(3,7);
                HitPoints += heal;
-               Game.Messages.Enqueue($"You've healed {heal}");
+               Game.AddMessage($"You've healed {heal}");
             } else {
                 HitPoints -= damage;
-                Game.Messages.Enqueue($"You've taken {damage} damage");
+                Game.AddMessage($"You've taken {damage} damage");
             }
             
         }
@@ -41,6 +43,18 @@ namespace RpgGame
         public override string GetSign()
         {
             return "@";
+        }
+
+        public override void Kill()
+        {
+            Game.AddMessage($"You Died!!!");
+            Game.IsRunning = false;
+        }
+
+        public override void OnKill(GameCharacter victim)
+        {
+            base.OnKill(victim);
+            KillCount++;
         }
     }
 }

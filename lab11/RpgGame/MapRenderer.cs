@@ -9,8 +9,8 @@ namespace RpgGame
             Radius = radius;
         }
 
-        public void Render(Map map,int x, int y){
-
+        public void Render(Map map,int x, int y)
+        {
             var startX = x-Radius;
             var startY = y-Radius;
             var endX = x+Radius;
@@ -34,7 +34,6 @@ namespace RpgGame
                     if(isCharacterInSpot){
                         continue;
                     }
-    
 
                     var field = map.Fields[px,py];
                     switch(field)
@@ -49,10 +48,6 @@ namespace RpgGame
                 }
                 Console.WriteLine();
             }
-
-
         }
-
     }
-
 }

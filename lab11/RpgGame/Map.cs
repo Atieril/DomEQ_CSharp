@@ -1,7 +1,7 @@
 namespace RpgGame
 {
-    public class Map{
-        
+    public class Map
+    {
         public Player Player {get;set;}
 
         public int Width {get;}
@@ -21,40 +21,52 @@ namespace RpgGame
 
         }
 
-        internal bool TryMoveCharacter(int x, int y, Player player)
+        internal bool TryMoveCharacter(int x, int y, GameCharacter movingCharacter)
         {
-            var destinationX = player.Position.X+x;
-            var destinationY = player.Position.Y+y;
+            var destinationX = movingCharacter.Position.X+x;
+            var destinationY = movingCharacter.Position.Y+y;
 
             if(destinationX <0 || destinationX >= Width || destinationY <0 || destinationY >= Height){
                 return false;
             }
 
-            foreach(var character in Characters){
-                if(character.Position.X == destinationX && character.Position.Y == destinationY && player != character) {
-                    var monster = (Monster)character;
-                    player.Attack(monster);
-                    if(monster.HitPoints<0){
-                        Game.Messages.Enqueue($"You killed {monster.Name}");
-                        Characters.Remove(monster);
+            var toRemove = new List<GameCharacter>();
+
+            foreach(var targetCharacter in Characters){
+                if(targetCharacter.Position.X == destinationX && targetCharacter.Position.Y == destinationY && movingCharacter != targetCharacter) {
+                    
+
+                    movingCharacter.Attack(targetCharacter);
+                    if(targetCharacter.HitPoints<0){
+                        
+                        targetCharacter.Kill();
+                        movingCharacter.OnKill(targetCharacter);
+
+                        
+                        toRemove.Add(targetCharacter);
                     }
                     return false;
 
                 }
             }
+
+            foreach(var character in toRemove){
+                Characters.Remove(character);
+            }
             
             var targetElement = Fields[destinationX,destinationY];
 
             if(IsWalkable(targetElement)){
-                player.Position.X = destinationX;
-                player.Position.Y = destinationY;
+                movingCharacter.Position.X = destinationX;
+                movingCharacter.Position.Y = destinationY;
                 return true;
             }
 
             return false;
         }
 
-        private bool IsWalkable(MapElement element){
+        private bool IsWalkable(MapElement element)
+        {
             if (element == MapElement.Empty)
             {
                 return true;
